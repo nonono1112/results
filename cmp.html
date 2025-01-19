@@ -1,0 +1,1075 @@
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title> Audio Dataset Labeler</title>
+</head>
+<style>
+body {
+font-family: Tahoma;
+margin: 0px;
+padding: 10px;
+background-color: floralwhite;
+}
+#canvas {
+  width: 95%;
+  height: 200px;
+  border-radius: 10px;
+  background-color: ffd0c8;
+/*  margin:20px;*/
+}
+
+
+#canvas1 {
+  width: 95%;
+  height: 80px;
+  border-radius: 10px;
+  background-color: #ccc;
+}
+#canvas1:hover{background-color: #d6d6d6;}
+
+#canvas2 {
+  width: 95%;
+  height: 80px;
+  border-radius: 10px;
+  background-color: #ccc;
+}
+#canvas2:hover{background-color: #d6d6d6;}
+
+#canvas3 {
+  width: 95%;
+  height: 80px;
+  border-radius: 10px;
+  background-color: #ccc;
+}
+#canvas3:hover{background-color: #d6d6d6;}
+
+#canvas4 {
+  width: 95%;
+  height: 80px;
+  border-radius: 10px;
+  background-color: #ccc;
+}
+#canvas4:hover{background-color: #d6d6d6;}
+
+#canvas5 {
+  width: 95%;
+  height: 80px;
+  border-radius: 10px;
+  background-color: #ccc;
+}
+#canvas5:hover{background-color: #d6d6d6;}
+
+#canvas6 {
+  width: 95%;
+  height: 80px;
+  border-radius: 10px;
+  background-color: #ccc;
+}
+#canvas6:hover{background-color: #d6d6d6;}
+
+#canvas7 {
+  width: 95%;
+  height: 80px;
+  border-radius: 10px;
+  background-color: #ccc;
+}
+#canvas7:hover{background-color: #d6d6d6;}
+
+
+
+.button-vote {
+    font-size: 24px;
+    padding: 15px 30px;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+   margin:5px;
+}
+
+.button-navi {
+    font-size: 24px;
+    padding: 15px 10px;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100px;
+}
+
+.button-export{
+    font-size: 24px;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+   margin:5px;
+   display: inline-block;
+}
+
+
+#main-dial {
+        position: relative;
+        border:0px solid black;
+        height:10px;
+        width:95%;
+        display: inline-block;
+        text-align:left;
+}
+
+#dial {
+        position: relative;
+        border:0px solid black;
+        border-radius: 10px;
+        height:10px;
+        width:0%;
+        display: inline-block;
+        background-color:lightblue;
+        top: -10px;
+}
+
+
+
+#main-indexmap {
+        position: relative;
+        border:0px solid black;
+        height:30px;
+        width:95%;
+        display: inline-block;
+        text-align:left;
+        cursor: pointer;
+}
+
+#indexmap {
+        position: relative;
+        border:0px solid black;
+        border-radius: 10px;
+        height:30px;
+        width:100%;
+        display: inline-block;
+/*      background-color:#007bff;*/
+        background: repeating-linear-gradient( to right, #5255f6, #52a9f6 10px, #80b2ff 10px, #8094ff 20px );
+}
+
+
+#filename {
+    font-size: 23px;
+    padding: 5px 5px;
+    font-family: Impact;
+    border-radius: 10px;
+    color: #007bff;
+   width:75px;
+    margin-bottom:10px;
+   border:0px;
+   box-shadow: inset 0px -3px #007bff;
+    
+}
+
+.radioButton {
+display:inline;
+font-size: 30px;  
+color: #007bff; 
+vertical-align:middle;
+}
+
+
+
+
+</style>
+
+<body onfocus="this.blur()" onload="init()">
+<!--<button id="loadButton">Load MP3</button>-->
+<div style="text-align:center; whitespace :nowrap">
+
+<input type=text value="" maxlength=5 size=4 id="filename" style="text-align:center" onblur="updateIndex(this.value)" onfocus="this.select()" onkeydown="if(event.key==='Enter'){this.blur();updateIndex(this.value);}"></input>
+
+<div style="display:inline-box;align-items: right;justify-content: right;">
+<!--<div id="main-indexmap"><div id="indexmap"></div></div>-->
+<div  style="display:flex;align-items: center;justify-content: right;"><div style="width:50px;">Lera&nbsp;<div id="leravote"></div></div><canvas id='canvas1'></canvas></div>
+<div  style="display:flex;align-items: center;justify-content: right;"><div style="width:50px;">Lima&nbsp;<div id="limavote"></div></div><canvas id='canvas2'></canvas></div>
+<div  style="display:flex;align-items: center;justify-content: right;"><div style="width:50px;">Diana&nbsp;<div id="dianavote"></div></div><canvas id='canvas3'></canvas></div>
+<div  style="display:flex;align-items: center;justify-content: right;"><div style="width:50px;">Jenny&nbsp;<div id="zhaniyavote"></div></div><canvas id='canvas4'></canvas></div>
+<div  style="display:flex;align-items: center;justify-content: right;"><div style="width:50px;">Sonya&nbsp;<div id="sonyavote"></div></div><canvas id='canvas5'></canvas></div>
+<div  style="display:flex;align-items: center;justify-content: right;"><div style="width:50px;">Leria&nbsp;<div id="leriavote"></div></div><canvas id='canvas6'></canvas></div>
+<div  style="display:flex;align-items: center;justify-content: right;"><div style="width:50px;">Kash&nbsp;<div id="kashtankavote"></div></div><canvas id='canvas7'></canvas></div>
+
+
+<div  style="display:flex;align-items: center;justify-content: right;"><div style="width:50px;">&nbsp;<div></div></div><canvas id='canvas' height="1000"></canvas></div>
+<div  style="display:flex;align-items: center;justify-content: right;"><div style="width:50px;">&nbsp;<div></div></div><div id="main-dial"><div id="dial"></div></div></div>
+</div>
+<audio id="audioPlayer">
+  <source src="" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+<br>
+<button onfocus="this.blur()" class="button-navi" onclick="prevFile()"><<</button>
+
+	<div style="display:none">
+<button onfocus="this.blur()" id="bad" class="button-vote"  style="background-color: red;" onclick="vote(false)">BAD</button>
+<button onfocus="this.blur()" id="good" class="button-vote"  style="background-color: green;" onclick="vote(true)">GOOD</button>
+	</div>
+
+<button onfocus="this.blur()" class="button-navi" onclick="nextFile()">>></button>
+
+
+	<div style="display:none">
+
+
+<br><br>
+<font color="#007bff">SHOW</font><br>
+        <div onclick="filterSelection=undefined;document.getElementById('radioall').checked=true;" class="radioButton" ><input  type='radio' id='radioall' name='option' checked><label style="vertical-align: middle;" for='radioall'>All</label></div>
+        <div onclick="filterSelection=true;document.getElementById('radiogood').checked=true;"  class="radioButton" ><input type='radio' id='radiogood' name='option' ><label style="vertical-align: middle;" for='radiogood'>Good</label></div>
+        <div onclick="filterSelection=false;document.getElementById('radiobad').checked=true;"  class="radioButton" ><input type='radio' id='radiobad' name='option' ><label style="vertical-align: middle;" for='radiobad'>Bad</label></div>
+        <div onclick="filterSelection=-1;document.getElementById('radionew').checked=true;"  class="radioButton" ><input type='radio' id='radionew' name='option' ><label style="vertical-align: middle;" for='radionew'>New</label></div>
+<div style="height:18px" id="status"></div>
+<br>
+
+What you hear was recorded in response to the greeting "Hello, how are you?". 
+<!--</div>-->
+<br>
+<font color="red">BAD</font>:<br>&nbsp;&nbsp;  Accents, non russian language, speech impediments, mumbling, extraneous sounds such as clicking, snapping, slurping, laughter, shouting, children, echo, excessively loud sound, background noises like other conversations, TV or music, male or child's voice, inappropriate answer to the greeting, irony in the voice, presence of multiple people in the conversation, sound of the conversation ending, burping, yawning, etc. 
+<br><br>
+<font color="green">GOOD</font>:<br>&nbsp;&nbsp;  Clear russian speech, not too quiet, not too harsh female voice aged 16-30 who entered the chat with serious intentions. 
+<br><br><br>
+
+<div style="text-align:center" id="results">
+<button class="button-export"   style="height:42px" onclick="exportCSV()">EXPORT</button>
+<button class="button-export"><label style="width: 150px;" for="fileInput" class="button-export">IMPORT</label>
+<input style="visibility:hidden;display:contents;" type="file" id="fileInput" accept=".txt,.csv">
+</button>
+<button class="button-export"   style="height:42px" onclick="votes.length=0;loadDefautlVotes();updateButtons();">DEFAULT</button>
+<button class="button-export"   style="height:42px" onclick="votes.length=0;fillVotesWithRandomData();updateButtons();">RANDOM</button>
+<button class="button-export"   style="height:42px" onclick="votes.length=0;updateButtons();">RESET</button>
+</div>
+
+
+	</div>
+<script>
+
+
+
+
+var currentIndex=1;
+var currentDialWidth=1;
+var dialIntervalID;
+var fineNotFound=false;
+let votes = [];
+var filterSelection=undefined;
+var totalRecords=1000
+let personalVote = Array(8).fill().map(entry => Array(totalRecords))
+
+
+function saveCurrentIndex(index) {
+//    console.log("index: ",index);
+    localStorage.setItem('currentIndex', index);
+}
+
+function loadCurrentIndex() {
+    currentIndex=parseInt(localStorage.getItem('currentIndex')) || 1;
+    document.getElementById("filename").value=currentIndex;
+}
+
+                                                                                 
+function updateIndex(value){
+        currentIndex=cleanupString(value)-1;
+        if(currentIndex<0) {currentIndex=0;}
+        nextFile(true);
+//       console.log(currentIndex);
+}
+
+ 
+function cleanupString(input) {
+    // Remove all non-digit characters from the input
+    let cleaned = input.replace(/\\D/g, '');
+    // Keep only the first 6 digits if there are more than 6 digits
+    cleaned = cleaned.slice(0, 6);
+    return cleaned;
+}
+
+function arrayToCSV(array) {
+//  return array.map((item, index) => `${index},${item}`).join('\n');
+  let exArray = [];
+
+  for (index=0;index<totalRecords;index++) {
+        exArray[index]=votes[index]
+  }
+
+  return exArray.map((item, index) => `${index}:${item}`).join('\n');
+}
+
+
+function exportCSV() {
+
+  if(votes.length == 0) {return;}
+
+  array=votes;
+//  filename="votes.csv"; 
+
+    const now = new Date();
+    const year = now.getFullYear().toString();//.slice(-2);
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    filename= "votes_"+hours+"_"+minutes+"_"+day+"_"+month+"_"+year+".csv";
+
+
+  const csv = arrayToCSV(array);
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', filename);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+
+
+
+function updateButtons(){
+
+
+		if(personalVote[1][currentIndex+0] === true){document.getElementById('leravote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('leravote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[2][currentIndex+0] === true){document.getElementById('limavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('limavote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[3][currentIndex+0] === true){document.getElementById('dianavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('dianavote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[4][currentIndex+0] === true){document.getElementById('zhaniyavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('zhaniyavote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[5][currentIndex+0] === true){document.getElementById('sonyavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('sonyavote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[6][currentIndex+0] === true){document.getElementById('leriavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('leriavote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[7][currentIndex+0] === true){document.getElementById('kashtankavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('kashtankavote').innerHTML="<font color='red'>BAD</font>";}
+
+		drawMap(1);drawMap(2);drawMap(3);drawMap(4);drawMap(5);drawMap(6);drawMap(7);
+
+
+
+        if(votes[currentIndex-1] == undefined){
+                document.getElementById("good").style.boxShadow="";
+                document.getElementById("bad").style.boxShadow="";
+                document.getElementById("good").style.color="white";
+                document.getElementById("bad").style.color="white";
+
+
+        }else if(votes[currentIndex-1]) {
+//                      document.getElementById("good").style.boxShadow="inset 4px 4px #000";
+                document.getElementById("good").style.boxShadow="inset 1px 2px #000";
+                document.getElementById("bad").style.boxShadow="";
+                document.getElementById("good").style.color="black";
+                document.getElementById("bad").style.color="white";
+        }else{
+//                      document.getElementById("bad").style.boxShadow="inset 4px 4px #000";
+                document.getElementById("bad").style.boxShadow="inset 1px 2px #000";
+                document.getElementById("good").style.boxShadow="";
+                document.getElementById("good").style.color="white";
+                document.getElementById("bad").style.color="black";
+
+        }
+
+  if(noVotesYet()){
+        document.getElementById("status").innerHTML="<font color='red'>Votes database is empty, please import one or start voting</font>";
+  }else{
+        document.getElementById("status").innerHTML="";
+  }
+//  drawMap(1);
+
+
+}
+
+function padNumber(num) {
+  return num.toString().padStart(6, '0');
+}
+
+function growDial(){
+        if(currentDialWidth<101){
+                document.getElementById("dial").style.width=currentDialWidth+"%";
+                currentDialWidth++;
+        }
+}
+
+
+function resetDial(){
+                document.getElementById("canvas").style.backgroundColor="#ffd0c8";
+                clearInterval(dialIntervalID);
+                document.getElementById("dial").style.width="0%";
+                currentDialWidth=1;
+}
+
+function playFile(reset){
+//        filename="sound"+padNumber(currentIndex)+".mp3"
+        var audio = document.getElementById('audioPlayer');
+//      audio.src=filename;
+
+        if(reset == true){
+                //currentDialWidth=1;
+                resetDial();
+        }
+        audio.play();
+        setTimeout('var audio = document.getElementById("audioPlayer");if (audio.error == null) {document.getElementById("canvas").style.backgroundColor="#7decc2";clearInterval(dialIntervalID);dialIntervalID=setInterval("growDial()",70);}',100);
+
+}
+
+function pauseFile(){
+        var audio = document.getElementById('audioPlayer');
+        audio.pause();
+        clearInterval(dialIntervalID);
+}
+
+
+
+function nextFile(act){
+        if(noVotesYet() && ( (filterSelection != undefined) && (filterSelection != -1) ) ){
+                filterSelection=undefined;document.getElementById('radioall').checked=true;
+                return;
+        }
+        if(currentIndex<totalRecords){
+                oldIndex=currentIndex;
+                currentIndex++;
+//              console.log("Current index: ",currentIndex);
+//              console.log("Current value: ",votes[currentIndex-1]);
+//              if((filterSelection == undefined) || (noVotesYet())){
+//              document.querySelector("canvas").style.backgroundColor="#7decc2"
+                if(!noVotesYet()){ 
+
+                        if(filterSelection == true){
+//                              console.log("show GOOD");
+                                while(votes[currentIndex-1]!=true){
+                                        currentIndex++;
+                                        if(currentIndex>=totalRecords) {currentIndex=totalRecords-1;if(votes[currentIndex-1]!=true){currentIndex=oldIndex;};break;}
+                                }
+
+                        }else if (filterSelection == false){
+//                              console.log("show BAD");
+                                while(votes[currentIndex-1]!=false){
+                                        currentIndex++;
+                                        if(currentIndex>=totalRecords) {currentIndex=totalRecords-1;if(votes[currentIndex-1]!=false){currentIndex=oldIndex;};break;}
+                                }
+                        }
+                }
+
+                if(filterSelection == -1){
+//                              console.log("show NEW");
+                        while(votes[currentIndex-1]!=undefined){
+                                currentIndex++;
+                                if(currentIndex>=totalRecords) {currentIndex=totalRecords-1;if(votes[currentIndex-1]!=undefined){currentIndex=oldIndex;};break;}
+                        }
+                }
+
+
+                updateButtons();
+                drawWaveform();
+//              console.log("act",act);
+//                if(act == undefined) {playFile(true);}else{resetDial()}
+		resetDial();
+        }
+
+
+}
+
+function prevFile(){
+        if(noVotesYet() && ((filterSelection != undefined) && (filterSelection != -1))){
+                filterSelection=undefined;document.getElementById('radioall').checked=true;
+                return;
+        }
+
+        if(currentIndex>1){
+                oldIndex=currentIndex;
+                currentIndex--;
+                //document.querySelector("canvas").style.backgroundColor="#7decc2"
+//              console.log("Current index: ",currentIndex);
+//              console.log("Current value: ",votes[currentIndex-1]);
+                if(!noVotesYet()){ 
+
+                        if(filterSelection == true){
+//                              console.log("show GOOD");
+                                while(votes[currentIndex-1]!=true){
+                                        currentIndex--;
+                                        if(currentIndex<=0) {currentIndex=1;if(votes[currentIndex-1]!=true){currentIndex=oldIndex;};break;}
+                                }
+
+                        }else if (filterSelection == false){
+//                              console.log("show BAD");
+                                while(votes[currentIndex-1]!=false){
+                                        currentIndex--;
+                                        if(currentIndex<=0) {currentIndex=1;if(votes[currentIndex-1]!=false){currentIndex=oldIndex;};break;}
+                                }
+                        }
+                }
+
+
+                if(filterSelection == -1){
+//                              console.log("show NEW");
+                        while(votes[currentIndex-1]!=undefined){
+                                        currentIndex--;
+                                        if(currentIndex<=0) {currentIndex=1;if(votes[currentIndex-1]!=undefined){currentIndex=oldIndex;};break;}
+                        }
+                }
+
+
+                updateButtons();
+                drawWaveform();
+         //       playFile(true);
+		resetDial();
+        }
+
+}
+
+
+function noVotesYet() {
+    return votes.length === 0;
+}
+
+function vote(act){
+        if(fileNotFound) {return;}
+
+        filename="sound"+padNumber(currentIndex)+".mp3"
+        votes[currentIndex-1]=act;
+        if(act){ //good file
+//        document.getElementById("results").innerHTML=document.getElementById("results").innerHTML+filename+"="+"GOOD<br>";
+        }else{ //bad file
+//        document.getElementById("results").innerHTML=document.getElementById("results").innerHTML+filename+"="+"BAD<br>";
+        }
+        nextFile()
+        
+}
+
+
+        function toggleAudio() {
+            var audio = document.getElementById('audioPlayer');
+                if (audio.error == null) {
+                    if (audio.paused) {
+                        document.getElementById("canvas").style.backgroundColor="#7decc2";
+                        playFile(false);
+
+
+                    } else {
+                        document.getElementById("canvas").style.backgroundColor="#ffd0c8";
+                        pauseFile();
+
+                    }
+                }else{
+                        document.getElementById("canvas").style.backgroundColor="#ffd0c8";
+                }
+        }
+
+
+
+function isUrlAvailable(url) {
+    return fetch(url)
+        .then(response => response.ok)
+        .catch(() => false);
+}
+
+
+const margin = 10;
+const chunkSize = 50;
+
+//const loadButton = document.getElementById("loadButton");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const ac = new AudioContext();
+const {width, height} = canvas;
+const centerHeight = Math.ceil(height / 2);
+const scaleFactor = (height - margin * 2) / 2;
+
+async function drawWaveform() {
+
+
+  saveCurrentIndex(currentIndex);
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  var audio = document.getElementById("audioPlayer");
+//  if (audio.error != null) {return;} // file not found
+//  if(!isUrlAvailable(filename)){return}
+  filename="sound"+padNumber(currentIndex)+".mp3"
+
+  document.getElementById("audioPlayer").src=filename;
+//  document.getElementById("filename").innerHTML=  filename;
+//  document.getElementById("filename").value=  padNumber(currentIndex)
+  document.getElementById("filename").value=  currentIndex;
+
+  const url = filename; // Replace with your MP3 URL
+
+//  const response = await fetch(url);
+try {
+
+  const response = await fetch(url);
+  if (!response.ok) {
+        fileNotFound=true;
+        return;
+  //  throw new Error('Network response was not ok ' + response.statusText);
+  }
+
+
+
+  fileNotFound=false;
+
+  const buffer = await response.arrayBuffer();
+  const audioBuffer = await ac.decodeAudioData(buffer);
+  const float32Array = audioBuffer.getChannelData(0);
+
+  const array = [];
+
+  let i = 0;
+  const length = float32Array.length;
+  while (i < length) {
+    array.push(
+      float32Array.slice(i, i += chunkSize).reduce(function (total, value) {
+        return Math.max(total, Math.abs(value));
+      })
+    );
+  }
+
+  canvas.width = Math.ceil(float32Array.length / chunkSize + margin * 2);
+
+//  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let index in array) {
+    ctx.strokeStyle = "blue";
+    ctx.beginPath();
+    ctx.moveTo(200+margin + Number(index), centerHeight - array[index] * scaleFactor);
+    ctx.lineTo(200+margin + Number(index), centerHeight + array[index] * scaleFactor);
+    ctx.stroke();
+  }
+
+
+
+}catch{
+        fileNotFound=true;
+        return;
+
+}
+
+}
+
+
+/*
+function fillVotesWithRandomData2(){
+  for (index=0;index<30000;index++) {
+        votes[index]=Math.random() > 0.5
+  }
+
+  for (let i = 0; i < votes.length; i++) {
+    if (i >300 && i < 6000) {
+      votes[i] = undefined;
+    }
+
+    if (i >12000 && i < 15000) {
+      votes[i] = undefined;
+    }
+
+    if (i >20000 && i < 27000) {
+      votes[i] = undefined;
+    }
+
+  }
+
+}
+  */
+function fillVotesWithRandomData() {
+  const totalVotes = totalRecords;
+  votes = new Array(totalVotes);
+
+  // Fill the array with random boolean values
+  for (let index = 0; index < totalVotes; index++) {
+    votes[index] = Math.random() > 0.5;
+  }
+
+  // Generate random intervals for undefined values
+  const numIntervals = 3; // You can adjust this number
+  let intervals = [];
+
+  for (let i = 0; i < numIntervals; i++) {
+    let start = Math.floor(Math.random() * totalVotes);
+    let end = Math.min(start + Math.floor(Math.random() * 7000) + 3000, totalVotes);
+    intervals.push([start, end]);
+  }
+
+  // Sort intervals to ensure they don't overlap
+  intervals.sort((a, b) => a[0] - b[0]);
+
+  // Set undefined values for each interval
+  intervals.forEach(([start, end]) => {
+    for (let i = start; i < end; i++) {
+      votes[i] = undefined;
+    }
+  });
+
+  return votes;
+}
+
+function approximateCompare(inputValue, referenceValue) {
+//   console.log(inputValue,referenceValue);
+//    if(Math.abs(inputValue - referenceValue)<2) {console.log(Math.abs(inputValue - referenceValue));}
+    return Math.abs(inputValue - referenceValue) <= 1.5
+}                                                      
+
+function drawMap(n){
+//console.log(n,"canvas"+n);
+
+  const canvas = document.getElementById("canvas"+n);
+  const ctx = canvas.getContext("2d");
+
+
+//  var toggle=0;
+  var numRecords=1000
+  var toggle=false;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  var x,cx;
+  var blueDone=false;
+/*
+  if(xCoord == undefined){
+          cx=canvas2.width*Number(currentIndex)/30000;
+//        cx=xCoord * (canvas2.width / parseInt(document.getElementById("canvas2").offsetWidth));
+  }else{
+          cx=xCoord * (canvas2.width / parseInt(document.getElementById("canvas2").offsetWidth));
+  }
+*/  
+  cx=canvas.width*Number(currentIndex)/numRecords;
+
+  for (index=0;index<numRecords;index++) {
+
+      x=canvas.width*Number(index)/numRecords;
+
+      if(Number.isInteger(x)){
+
+
+
+
+      if(approximateCompare(x,cx) && !blueDone){
+		   blueDone=true;
+
+        	    ctx.strokeStyle = "blue";
+	            ctx.beginPath();
+	            ctx.moveTo(x, 2);
+	            ctx.lineTo(x, canvas.height-2);
+        	    ctx.stroke();
+
+        }else{
+
+
+//                if(votes[index] !== undefined){
+		if(personalVote[n][parseInt(index)] !== undefined){
+
+	            if(personalVote[n][parseInt(index)] === true){
+//                    if(votes[index] === true){
+                            ctx.strokeStyle = "lightgreen";
+                    }else{
+                            ctx.strokeStyle = "#FF999B";
+                    }
+                        ctx.beginPath();
+                        ctx.moveTo(x, 2);
+                        ctx.lineTo(x, canvas.height-2);
+                        ctx.stroke();
+                }else{
+//                      if(toggle>1){
+                        if(toggle){
+                                    ctx.strokeStyle = "#aaa";
+                        }else{
+                                    ctx.strokeStyle = "#ccc";
+                        }
+                        toggle=!toggle;
+//                      toggle++;
+//                      if(toggle>3){           toggle=0;}
+                            ctx.beginPath();
+                            ctx.moveTo(x, 3);
+                            ctx.lineTo(x, canvas.height-3);
+                            ctx.stroke();
+                }
+
+	}
+      }
+  }
+
+}
+
+
+
+
+
+var xPos;
+var yPos;
+var xCoord;
+var jumpIndex=0;
+
+        document.getElementById("canvas2").addEventListener("mousemove", function(event) {
+//          xCoord = event.clientX - this.getBoundingClientRect().left;
+            if (event.buttons & 1) {
+                processClick(event);
+            }
+
+//          console.log("X coordinate: " + xCoord);
+        });
+//        document.getElementById("indexmap").addEventListener("touchstart", function(event) {          processTouch(event);        });
+
+        document.getElementById('canvas1').addEventListener('click', function(event) {                processClick(event);        });
+        document.getElementById('canvas2').addEventListener('click', function(event) {                processClick(event);        });
+        document.getElementById('canvas3').addEventListener('click', function(event) {                processClick(event);        });
+        document.getElementById('canvas4').addEventListener('click', function(event) {                processClick(event);        });
+        document.getElementById('canvas5').addEventListener('click', function(event) {                processClick(event);        });
+        document.getElementById('canvas6').addEventListener('click', function(event) {                processClick(event);        });
+        document.getElementById('canvas7').addEventListener('click', function(event) {                processClick(event);        });
+
+
+/*
+   function processTouch(event){
+        if(event.touches.length == 1){
+            var touch = event.touches[0];
+                xPos = touch.clientX;
+                yPos = touch.clientY;
+                xCoord = xPos;// - this.getBoundingClientRect().left;
+                xCoordinate=xCoord;
+                var viewportWidth = window.innerWidth;
+                var percentage = (xCoordinate / viewportWidth)*1.1;
+                percentInt=parseInt(percentage*103);
+                console.log(percentInt);
+
+                jumpIndex=parseInt(30000-(300*(100-percentInt)));
+                if(jumpIndex<0){jumpIndex=0;}
+                if(jumpIndex>30000){jumpIndex=30000;}
+                console.log(jumpIndex);
+                filename="sound"+padNumber(jumpIndex)+".mp3"
+                document.getElementById("filename").innerHTML=  filename;
+                currentIndex=jumpIndex;
+        }
+   };
+
+*/
+   function processClick(event){
+
+/*
+id="leravote"><
+id="limavote"><
+ id="dianavote"
+id="zhaniyavote
+id="sonyavote">
+ id="leriavote"
+*/
+
+		
+
+                xPos = event.clientX;
+                yPos = event.clientY;
+                xCoord = xPos - document.getElementById('canvas2').getBoundingClientRect().left;
+
+                xCoordinate=xCoord;
+                var viewportWidth = window.innerWidth;
+                var percentage = (xCoordinate / viewportWidth)*1.05;
+
+                percentInt=parseInt(percentage*103);
+//                console.log(percentInt);
+
+                jumpIndex=parseInt(totalRecords-(totalRecords/100*(100-percentInt)));
+//              jumpIndex=calculateJumpIndex(percentInt);
+
+//              console.log(jumpIndex);
+                if(percentInt<1){jumpIndex=1;}
+                if(jumpIndex>totalRecords){jumpIndex=totalRecords;}
+//                console.log(jumpIndex);
+                filename="sound"+padNumber(jumpIndex)+".mp3"
+                document.getElementById("filename").innerHTML=  filename;
+
+                currentIndex=jumpIndex-1;
+//              console.log(xCoord,currentIndex,percentInt);
+
+/*
+		if(personalVote[1][currentIndex+1] === true){document.getElementById('leravote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('leravote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[2][currentIndex+1] === true){document.getElementById('limavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('limavote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[3][currentIndex+1] === true){document.getElementById('dianavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('dianavote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[4][currentIndex+1] === true){document.getElementById('zhaniyavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('zhaniyavote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[5][currentIndex+1] === true){document.getElementById('sonyavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('sonyavote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[6][currentIndex+1] === true){document.getElementById('leriavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('leriavote').innerHTML="<font color='red'>BAD</font>";}
+		if(personalVote[7][currentIndex+1] === true){document.getElementById('kashtankavote').innerHTML="<font color='green'>GOOD</font>";}else{document.getElementById('kashtankavote').innerHTML="<font color='red'>BAD</font>";}
+
+		drawMap(1);drawMap(2);drawMap(3);drawMap(4);drawMap(5);drawMap(6);drawMap(7);
+*/
+
+                nextFile(true);
+
+
+   };
+
+
+
+async function loadDefautlVotes() {
+        url="./votes.csv"
+    try {
+        const response = await fetch(url);
+        const data = await response.text();
+        const lines = data.split('\n');
+
+        lines.forEach(line => {
+            if (line.trim() !== '') {
+                const [index, value] = line.split(':');
+                if (value === undefined) {
+                    console.log("Import file format error!");
+                    return;
+                }
+
+                const trimmedValue = value.trim().toLowerCase();
+                if (trimmedValue === 'true') {
+                    votes[parseInt(index)] = true;
+                } else if (trimmedValue === 'false') {
+                    votes[parseInt(index)] = false;
+                }
+                // Uncomment the following block if you want to handle 'undefined' values
+                /*
+                else if (trimmedValue === 'undefined') {
+                    votes[parseInt(index)] = false;
+                }
+                */
+            }
+        });
+        updateButtons(); //draw value maps
+        return votes;
+    } catch (error) {
+        console.error("Error loading or processing CSV:", error);
+        return [];
+    }
+}
+
+
+
+
+
+
+    const fileInput = document.getElementById('fileInput');
+
+    fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) {
+            console.error('No file selected');
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const content = e.target.result;
+            const lines = content.split('\n');
+
+            votes.length=0; //uset array
+
+            lines.forEach(line => {
+                if (line.trim() !== '') {
+                    const [index, value] = line.split(':');
+                    if(value == undefined) {console.log("Import file format error!");return;}
+
+                    if(value.trim().toLowerCase() === 'true'){
+                        votes[parseInt(index)]=true;
+                    }
+                    if(value.trim().toLowerCase() === 'false'){
+                        votes[parseInt(index)]=false;
+                    }
+/*
+                    if(value.trim().toLowerCase() === 'undefined'){
+                        votes[parseInt(index)]=false;
+                    }
+*/
+
+
+//                    votes[parseInt(index)] = value.trim().toLowerCase() === 'true';
+                }
+            });
+
+//            console.log('Processed votes:', votes);
+                updateButtons();
+            // You can perform further actions with the votes array here
+        };
+
+        reader.onerror = function(e) {
+            console.error('Error reading file:', e.target.error);
+        };
+
+        reader.readAsText(file);
+    });
+
+
+
+
+//loadButton.addEventListener("click", drawWaveform);
+canvas.addEventListener("click", () => {  
+//audioPlayer.play();
+        toggleAudio();
+
+});
+
+document.getElementById('audioPlayer').addEventListener("ended", (event) => {            resetDial(); });
+
+//document.getElementById('audioPlayer').addEventListener('error',  (event) => {                   fileNotFound=false; console.log("file anavailable"); });
+
+
+async function loadVotes(url,n) {
+    try {
+        const response = await fetch(url);
+        const data = await response.text();
+        const lines = data.split('\n');
+
+        lines.forEach(line => {
+            if (line.trim() !== '') {
+                const [index, value] = line.split(':');
+                if (value === undefined) {
+                    console.log("Import file format error!");
+                    return;
+                }
+
+                const trimmedValue = value.trim().toLowerCase();
+                if (trimmedValue === 'true') {
+                    votes[parseInt(index)] = true;
+                } else if (trimmedValue === 'false') {
+                    votes[parseInt(index)] = false;
+                }
+
+		personalVote[n][parseInt(index)]=votes[parseInt(index)];
+                // Uncomment the following block if you want to handle 'undefined' values
+                /*
+                else if (trimmedValue === 'undefined') {
+                    votes[parseInt(index)] = false;
+                }
+                */
+            }
+        });
+
+	drawMap(n)
+        return votes;
+    } catch (error) {
+        console.error("Error loading or processing CSV:", error);
+        return [];
+    }
+}
+
+
+
+
+function init(){
+        document.getElementById('radioall').checked=true;
+//        fillVotesWithRandomData();
+//        loadDefautlVotes();
+        loadCurrentIndex();
+        drawWaveform();
+        updateButtons();
+        loadVotes("votes_lera_1k.csv",1);
+        loadVotes("votes_lima_1k.csv",2);
+        loadVotes("votes_diana_1k.csv",3);
+        loadVotes("votes_zhaniya_1k.csv",4); 
+        loadVotes("votes_sonya_1k.csv",5); 
+        loadVotes("votes_leria_1k.csv",6); 
+        loadVotes("votes_kashtanka_1k.csv",7); 
+
+}
+
+
+
+
+</script>
+
+</body>
+</html>
+
+
